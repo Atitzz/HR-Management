@@ -1,13 +1,14 @@
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe, Logger } from '@nestjs/common';
+import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const logger = new Logger('Bootstrap');
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: ['error', 'warn'],
+  });
 
   const configService = app.get(ConfigService);
   const port = configService.get<number>('app.port') ?? 3000;
@@ -68,9 +69,8 @@ async function bootstrap() {
 
   await app.listen(port);
 
-  logger.log(`Application running on: http://localhost:${port}`);
-  logger.log(`API Prefix: /${apiPrefix}`);
-  logger.log(`Swagger Docs: http://localhost:${port}/docs`);
+  console.log(`\n  HR Management API: http://localhost:${port}/${apiPrefix}`);
+  console.log(`  Swagger Docs:     http://localhost:${port}/docs\n`);
 }
 
 bootstrap();
