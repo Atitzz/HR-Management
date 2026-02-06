@@ -10,9 +10,9 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const configService = app.get(ConfigService);
-  const port = configService.get<number>('app.port');
-  const apiPrefix = configService.get<string>('app.apiPrefix');
-  const corsOrigin = configService.get<string>('app.corsOrigin');
+  const port = configService.get<number>('app.port') ?? 3000;
+  const apiPrefix = configService.get<string>('app.apiPrefix') ?? 'api/v1';
+  const corsOrigin = configService.get<string>('app.corsOrigin') ?? 'http://localhost:5173';
 
   // Global prefix
   app.setGlobalPrefix(apiPrefix);

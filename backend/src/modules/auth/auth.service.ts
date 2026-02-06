@@ -141,7 +141,7 @@ export class AuthService {
       user.id,
       user.email,
       user.role,
-      user.organizationId,
+      user.organizationId ?? undefined,
     );
 
     return {
@@ -167,7 +167,7 @@ export class AuthService {
       stored.user.id,
       stored.user.email,
       stored.user.role,
-      stored.user.organizationId,
+      stored.user.organizationId ?? undefined,
     );
 
     return tokens;

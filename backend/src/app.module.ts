@@ -34,8 +34,8 @@ import { PayrollModule } from './modules/payroll/payroll.module';
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => [
         {
-          ttl: configService.get<number>('throttle.ttl'),
-          limit: configService.get<number>('throttle.limit'),
+          ttl: configService.get<number>('throttle.ttl') ?? 60000,
+          limit: configService.get<number>('throttle.limit') ?? 100,
         },
       ],
       inject: [ConfigService],

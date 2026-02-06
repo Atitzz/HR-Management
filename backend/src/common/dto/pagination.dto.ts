@@ -34,7 +34,7 @@ export class PaginationDto {
   sortOrder?: 'asc' | 'desc' = 'desc';
 
   get skip(): number {
-    return (this.page - 1) * this.limit;
+    return ((this.page ?? 1) - 1) * (this.limit ?? 10);
   }
 }
 
@@ -47,13 +47,20 @@ export class PaginatedResult<T> {
     totalPages: number;
   };
 
-  constructor(data: T[], total: number, page: number, limit: number) {
+  constructor(
+    data: T[],
+    total: number,
+    page?: number,
+    limit?: number,
+  ) {
     this.data = data;
+    const p = page ?? 1;
+    const l = limit ?? 10;
     this.meta = {
       total,
-      page,
-      limit,
-      totalPages: Math.ceil(total / limit),
+      page: p,
+      limit: l,
+      totalPages: Math.ceil(total / l),
     };
   }
 }
